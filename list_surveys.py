@@ -12,6 +12,7 @@ HEADERS = {
 }
 
 def fetch_surveys():
+    print("DEBUG BASE_URL:", repr(BASE_URL))
     resp = requests.get(f"{BASE_URL}/surveys", headers=HEADERS)
     resp.raise_for_status()
     return resp.json()["result"]["elements"]
