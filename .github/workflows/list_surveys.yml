@@ -1,0 +1,28 @@
+name: Qualtrics List Surveys PoC
+
+on:
+  schedule:
+    - cron: "0 8 * * *"   # daily at 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run survey listing
+        run: python list_surveys.py
+        env:
+          QUALTRICS_TOKEN: ${{ secrets.QUALTRICS_TOKEN }}
+          QUALTRICS_DATACENTER: ${{ secrets.QUALTRICS_DATACENTER }}
